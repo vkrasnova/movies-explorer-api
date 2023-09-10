@@ -16,4 +16,5 @@
 ## Ссылки:
 
 Репозиторий: [github.com](https://github.com/vkrasnova/movies-explorer-api)   
-Сервер: [api.movies-x.ru](https://api.movies-x.ru)
+Сервер: [api.movies-x.ru](https://api.movies-x.ru)   
+IP: 51.250.108.220
