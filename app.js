@@ -2,14 +2,14 @@ require('dotenv').config({ path: './key.env' });
 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const { rateLimit } = require('express-rate-limit');
 const { errors } = require('celebrate');
+const cors = require('./middlewares/cors');
+const limiter = require('./middlewares/limiter');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const errorHandler = require('./utils/errors/errorHandler');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const {
   PORT = 3000,
@@ -18,23 +18,7 @@ const {
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
-
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://movies-ex.ru',
-    'https://movies-ex.ru',
-  ],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors);
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
