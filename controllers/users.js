@@ -5,11 +5,10 @@ const User = require('../models/users');
 const errorCatcher = require('../utils/errors/errorCatcher');
 const NotFoundError = require('../utils/errors/classes/NotFoundError');
 const { CREATED } = require('../utils/statusCodes');
+const { SUCCESS_MSG } = require('../utils/statusMessages');
 
 const createUser = errorCatcher(async (req, res) => {
-  const {
-    email, password, name,
-  } = req.body;
+  const { email, password, name } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const user = await User.create({
     email, password: hash, name,
@@ -35,13 +34,13 @@ const login = errorCatcher(async (req, res) => {
       httpOnly: true,
       sameSite: true,
     })
-    .send({ message: 'Вы успешно авторизованы' });
+    .send({ message: SUCCESS_MSG });
 });
 
 const logout = (_req, res) => {
   res
     .clearCookie('jwt')
-    .send({ message: 'Выход из аккаунта выполнен' });
+    .send({ message: SUCCESS_MSG });
 };
 
 const getCurrentUser = errorCatcher(async (req, res) => {
