@@ -1,4 +1,5 @@
 const CREATED = 201;
+
 const BAD_REQUEST_ERR = 400;
 const UNAUTHORIZED_ERR = 401;
 const FORBIDDEN_ERR = 403;
