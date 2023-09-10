@@ -2,6 +2,7 @@ const CustomError = require('./classes/CustomError');
 const DefaultError = require('./classes/DefaultError');
 const BadRequestError = require('./classes/BadRequestError');
 const ConflictError = require('./classes/ConflictError');
+const { NOT_FOUND_MSG, INVALID_DATA } = require('../statusMessages');
 
 function errorCatcher(fn) {
   return (req, res, next) => {
@@ -17,11 +18,11 @@ function errorCatcher(fn) {
           return;
         }
         if (name === 'ValidationError') {
-          next(new BadRequestError('Переданы некорректные данные'));
+          next(new BadRequestError(INVALID_DATA));
           return;
         }
         if (name === 'CastError') {
-          next(new BadRequestError('Объект с указанным ID не найден'));
+          next(new BadRequestError(NOT_FOUND_MSG));
           return;
         }
         next(new DefaultError());
