@@ -1,73 +1,42 @@
 const { Schema, model } = require('mongoose');
-const { isURL } = require('validator');
+const {
+  NUMBER_REQUIRED,
+  STRING_REQUIRED,
+  VALID_URL,
+} = require('../utils/schemaOptions');
 
 const movieSchema = new Schema(
   {
-    movieID: {
-      type: Number,
-      required: true,
-    },
-    nameRU: {
-      type: String,
-      required: true,
-    },
-    nameEN: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
+    movieID: NUMBER_REQUIRED,
+    nameRU: STRING_REQUIRED,
+    nameEN: STRING_REQUIRED,
+    description: STRING_REQUIRED,
+
     thumbnail: {
-      type: String,
-      required: true,
-      validate: {
-        validator: isURL,
-        message: 'Некорректная ссылка на мини-постер',
-      },
+      ...STRING_REQUIRED,
+      ...VALID_URL,
     },
     image: {
-      type: String,
-      required: true,
-      validate: {
-        validator: isURL,
-        message: 'Некорректная ссылка на постер',
-      },
+      ...STRING_REQUIRED,
+      ...VALID_URL,
     },
     trailerLink: {
-      type: String,
-      required: true,
-      validate: {
-        validator: isURL,
-        message: 'Некорректная ссылка на трейлер',
-      },
+      ...STRING_REQUIRED,
+      ...VALID_URL,
     },
-    year: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    director: {
-      type: String,
-      required: true,
-    },
-    duration: {
-      type: Number,
-      required: true,
-    },
+
+    year: STRING_REQUIRED,
+    country: STRING_REQUIRED,
+    director: STRING_REQUIRED,
+    duration: NUMBER_REQUIRED,
+
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
     },
   },
-  {
-    versionKey: false,
-  },
+  { versionKey: false },
 );
 
 module.exports = model('movie', movieSchema);
