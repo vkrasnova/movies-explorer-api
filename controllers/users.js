@@ -34,7 +34,12 @@ const login = errorCatcher(async (req, res) => {
       httpOnly: true,
       sameSite: true,
     })
-    .send({ message: SUCCESS_MSG, user });
+    .send({
+      message: SUCCESS_MSG,
+      _id: user._id,
+      email: user.email,
+      name: user.name,
+    });
 });
 
 const logout = (_req, res) => {
